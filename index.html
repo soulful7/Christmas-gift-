@@ -1,0 +1,331 @@
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<title>For You 💗</title>  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  <style>  
+body {  
+  margin: 0;  
+  font-family: Arial, sans-serif;  
+  background: linear-gradient(#ffe4ec, #ffd6e0);  
+  overflow: hidden;  
+}  
+  
+.slide {  
+  display: none;  
+  min-height: 100svh;  
+  padding: 20px;  
+  box-sizing: border-box;  
+  text-align: center;  
+}  
+  
+.slide.active {  
+  display: flex;  
+  flex-direction: column;  
+  justify-content: center;  
+  align-items: center;  
+}  
+  
+.btn {  
+  margin-top: 25px;  
+  padding: 12px 25px;  
+  border-radius: 25px;  
+  background: #ff6f91;  
+  color: white;  
+  border: none;  
+  font-size: 16px;  
+}  
+  
+.card {  
+  background: white;  
+  border-radius: 20px;  
+  padding: 25px;  
+  max-width: 90%;  
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);  
+}  
+  
+.tap-hint {  
+  position: absolute;  
+  bottom: 25px;  
+  font-size: 14px;  
+  color: #ff6f91;  
+  opacity: 0.8;  
+}  
+  
+/* snow */  
+.snowflake {  
+  position: fixed;  
+  top: -10px;  
+  animation: fall linear infinite;  
+}  
+  
+@keyframes fall {  
+  to { transform: translateY(110vh); }  
+}  
+  
+/* notes */  
+.notes {  
+  display: flex;  
+  gap: 12px;  
+  flex-wrap: wrap;  
+  justify-content: center;  
+  margin-top: 20px;  
+}  
+  
+.note {  
+  width: 80px;  
+  height: 80px;  
+  perspective: 600px;  
+}  
+  
+.note-inner {  
+  width: 100%;  
+  height: 100%;  
+  transition: transform 0.6s;  
+  transform-style: preserve-3d;  
+  position: relative;  
+}  
+  
+.note.flipped .note-inner {  
+  transform: rotateY(180deg);  
+}  
+  
+.note-front,  
+.note-back {  
+  position: absolute;  
+  inset: 0;  
+  border-radius: 10px;  
+  display: flex;  
+  align-items: center;  
+  justify-content: center;  
+  backface-visibility: hidden;  
+  font-weight: bold;  
+}  
+  
+.note-front {  
+  background: #ffb6c1;  
+  font-size: 24px;  
+}  
+  
+.note-back {  
+  background: white;  
+  transform: rotateY(180deg);  
+  font-size: 14px;  
+}  
+  
+.photo {  
+  width: 200px;  
+  height: 250px;  
+  object-fit: cover;  
+  border-radius: 15px;  
+  margin-top: 10px;  
+}
+  .full-image {
+  width: 100%;
+  height: 100svh;
+  object-fit: cover;
+  border-radius: 0;
+  }
+    /* ---------- LOCK SCREEN ---------- */
+  .lock-screen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(#ffe4ec, #ffd6e0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  .lock-card {
+    background: white;
+    padding: 30px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    width: 85%;
+    max-width: 320px;
+  }
+
+  .lock-card input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 15px;
+    border: 1px solid #ffb6c1;
+    margin: 15px 0;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  #errorMsg {
+    color: #ff4d6d;
+    display: none;
+    margin-top: 10px;
+  }
+  </style>
+  </head>
+
+  <body>
+    <!-- 🔒 LOCK SCREEN -->
+  <div id="lockScreen" class="lock-screen">
+    <div class="lock-card">
+      <h2>💗 A little secret 💗</h2>
+      <p>Enter the password to open</p>
+
+      <input
+        type="password"
+        id="passwordInput"
+        placeholder="Password ✨"
+      />
+
+      <button class="btn" onclick="unlock()">Unlock 🔓</button>
+
+      <p id="errorMsg">❌ Wrong password</p>
+    </div>
+  </div>
+
+  <audio id="music" src="blue.mp3" loop></audio>
+
+    <!-- SLIDE 1 -->
+<div class="slide active">
+  <h2>Just for Butki 💗✨</h2>
+  <h1>This Christmas,<br> made something special for you</h1>
+  <button class="btn" onclick="nextSlide()">Open it</button>
+</div>
+
+    <!-- SLIDE 2 -->
+<div class="slide">
+  <h1>🎁</h1>
+  <p>Jyada bhaw mat khana 🪷🌸</p>
+  <button class="btn" onclick="nextSlide()">Tap me</button>
+</div>
+
+    <!-- SLIDE 3: NOTES -->
+<div class="slide">
+  <h2>Tap the notes 💗</h2>
+
+  <div class="notes">
+    <div class="note" onclick="flipNote()"><div class="note-inner"><div class="note-front">💗</div><div class="note-back">You</div></div></div>
+    <div class="note" onclick="flipNote()"><div class="note-inner"><div class="note-front">💗</div><div class="note-back">are</div></div></div>
+    <div class="note" onclick="flipNote()"><div class="note-inner"><div class="note-front">💗</div><div class="note-back">very</div></div></div>
+    <div class="note" onclick="flipNote()"><div class="note-inner"><div class="note-front">💗</div><div class="note-back">special</div></div></div>
+    <div class="note" onclick="flipNote()"><div class="note-inner"><div class="note-front">💗</div><div class="note-back">to me 💞</div></div></div>
+  </div>
+
+  <button class="btn" onclick="nextSlide()">Next</button>
+</div>
+
+    <!-- SLIDE 4 -->
+<div class="slide">
+  <img src="snowman.jpg" class="photo">
+  <h2>This Christmas,<br>something special for you</h2>
+  <button class="btn" onclick="nextSlide()">Next</button>
+</div>
+
+  <!-- SLIDE 5: LETTER (YOUR FULL TEXT) -->
+<div class="slide" onclick="nextSlide()">
+  <div class="card">
+    <h2>Dear ded futiya</h2>
+    <p>
+      Merry Christmas 💌<br><br>
+      This Christmas i just wanted to tell you<br>
+      how much small you are in front of me 💗<br><br>
+
+      I hope you have a wonderful n butkiful day<br>
+      n eat lots n lots of momo ☺️<br><br>
+
+      height toh barega nhi bhaw hi bar rha he 🙂‍↕️<br><br>
+
+      Im grateful that I met you,<br>
+      got chance to spend time with you,<br>
+      got to know u even if its a bit<br><br>
+
+      I hope we get more time to spend together<br>
+      and no matter where life takes us<br>
+      lets be friends until the end ♾️🌸💗
+    </p>
+  </div>
+
+  <div class="tap-hint">Tap to continue</div>
+</div>
+
+    <!-- SLIDE 6: PHOTOS -->
+<div class="slide" onclick="nextSlide()">
+  <h2> ded futiya ka pics 📸</h2>
+  <p> Some of our memories 💞</p>
+  <img src="photo1.jpg" class="photo">
+  <img src="photo2.jpg" class="photo">
+</div>
+
+    <!-- SLIDE 7: FINAL NOTE (YOUR TEXT) -->
+<div class="slide" onclick="nextSlide()">
+  <div class="card">
+    <h2>One last thing…</h2>
+    <p>
+      Once again Merry Christmas 🎄<br>
+      and have a great great day<br><br>
+      Miss youuuuuuuuu ♾️💗<br>
+      Take care bacchi 😂
+    </p>
+  </div>
+  <div class="tap-hint">Tap to continue</div>
+</div>
+  <!-- ---------- FINAL THANK YOU SLIDE ---------- -->
+<div class="slide">
+  <img src="thankyou.jpg" class="full-image">
+</div>
+
+<script>
+let slides = document.querySelectorAll(".slide");
+let current = 0;
+let noteIndex = 0;
+
+function nextSlide() {
+  if (current === 0) document.getElementById("music").play();
+  slides[current].classList.remove("active");
+  current++;
+  if (current < slides.length) slides[current].classList.add("active");
+}
+
+  function flipNote() {
+  const notes = document.querySelectorAll(".note");
+  if (noteIndex < notes.length) {
+    notes[noteIndex].classList.add("flipped");
+    noteIndex++;
+  }
+}
+
+/* snow */
+for (let i = 0; i < 20; i++) {
+  let s = document.createElement("div");
+  s.className = "snowflake";
+  s.style.left = Math.random() * 100 + "vw";
+  s.style.animationDuration = (3 + Math.random() * 5) + "s";
+  s.innerHTML = "❄️";
+  document.body.appendChild(s);
+}
+
+const PASSWORD = "butki";
+
+function unlock() {
+  const input = document.getElementById("passwordInput").value;
+  const error = document.getElementById("errorMsg");
+
+  if (input === PASSWORD) {
+    const lock = document.getElementById("lockScreen");
+
+    // 🔥 completely remove lock screen
+    lock.parentNode.removeChild(lock);
+
+    // 🔁 reset slideshow cleanly
+    slides.forEach(s => s.classList.remove("active"));
+    current = 0;
+    slides[0].classList.add("active");
+
+  } else {
+    error.style.display = "block";
+  }
+}
+</script>
+
+</body>
+</html>
